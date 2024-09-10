@@ -1,0 +1,7 @@
+# Ignore everything
+*
+
+# But don't ignore these files
+!questions.lua
+!README.md
+!.gitignore
