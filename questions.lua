@@ -144,10 +144,18 @@ function script_properties()
     end
     obs.source_list_release(sources)
 
-    obs.obs_properties_add_button(props, "new_question", "New Question", new_question)
-    obs.obs_properties_add_button(props, "next_question", "Next in History", next_question)
-    obs.obs_properties_add_button(props, "prev_question", "Previous in History", previous_question)
-    obs.obs_properties_add_int(props, "auto_change_interval", "Auto-change Interval (minutes)", 1, 120, 1)
+    obs.obs_properties_add_bool(props, "enable_auto_change", "Enable Auto-change")
+    local auto_change_interval_prop = obs.obs_properties_add_int(props, "auto_change_interval", "Auto-change Interval (minutes)", 1, 120, 1)
+    
+    obs.obs_property_set_visible(auto_change_interval_prop, false)
+    
+    local function toggle_auto_change(props, property, settings)
+        local enable_auto_change = obs.obs_data_get_bool(settings, "enable_auto_change")
+        obs.obs_property_set_visible(auto_change_interval_prop, enable_auto_change)
+        return true
+    end
+    
+    obs.obs_property_set_modified_callback(obs.obs_properties_get(props, "enable_auto_change"), toggle_auto_change)
 
     return props
 end
@@ -158,8 +166,16 @@ end
 
 function script_update(settings)
     source_name = obs.obs_data_get_string(settings, "source")
-    auto_change_interval = obs.obs_data_get_int(settings, "auto_change_interval") * 60 * 1000
-    reset_auto_change_timer()
+    local enable_auto_change = obs.obs_data_get_bool(settings, "enable_auto_change")
+    if enable_auto_change then
+        auto_change_interval = obs.obs_data_get_int(settings, "auto_change_interval") * 60 * 1000
+        reset_auto_change_timer()
+    else
+        if auto_change_timer ~= nil then
+            obs.timer_remove(auto_change_timer)
+            auto_change_timer = nil
+        end
+    end
 end
 
 function script_load(settings)
@@ -183,7 +199,10 @@ function script_load(settings)
     obs.obs_data_array_release(next_hotkey_save_array)
     obs.obs_data_array_release(prev_hotkey_save_array)
     
-    auto_change_timer = obs.timer_add(auto_change_question, auto_change_interval)
+    local enable_auto_change = obs.obs_data_get_bool(settings, "enable_auto_change")
+    if enable_auto_change then
+        auto_change_timer = obs.timer_add(auto_change_question, auto_change_interval)
+    end
 end
 
 function script_save(settings)
