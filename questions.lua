@@ -2,6 +2,11 @@ obs = obslua
 source_name = ""
 questions = {
     "What's your favorite food?",
+    "What regrets do you have with making the show?",
+    "Why don't you stream these games?",
+    "What happened to the comic reviews?",
+    "Can you get [insert name here] as a guest?",
+    "What's your research process for each episode?",
 }
 question_history = {}
 current_history_index = 0
