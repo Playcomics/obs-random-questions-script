@@ -9,7 +9,7 @@ questions = {
     "What's your research process for each episode?",
     "What is the ideal snack for comics reading? (Scott Wachter)",
     "Will this question show up when I update the repository tonight?",
-"When the Battletech graphic novel comes out, can I bully you into letting me on for an episode of a comic based on a game? (Billy)",
+    "When the Battletech graphic novel comes out, can I bully you into letting me on for an episode of a comic based on a game? (Billy)",
 }
 question_history = {}
 current_history_index = 0
