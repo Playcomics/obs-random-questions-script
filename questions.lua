@@ -8,6 +8,7 @@ questions = {
     "Can you get [insert name here] as a guest?",
     "What's your research process for each episode?",
     "What is the ideal snack for comics reading? (Scott Wachter)",
+    "Will this question show up when I update the repository tonight?",
 }
 question_history = {}
 current_history_index = 0
