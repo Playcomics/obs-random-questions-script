@@ -7,6 +7,7 @@ questions = {
     "What happened to the comic reviews?",
     "Can you get [insert name here] as a guest?",
     "What's your research process for each episode?",
+    "What is the ideal snack for comics reading? (Scott Wachter)",
 }
 question_history = {}
 current_history_index = 0
